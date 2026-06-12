@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>跨境资金方案规划</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --primary: #1a56db;
+  --primary-dark: #0f3a8a;
+  --primary-light: #eff6ff;
+  --accent: #f59e0b;
+  --accent-light: #fffbeb;
+  --green: #059669;
+  --green-light: #ecfdf5;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-500: #6b7280;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --radius: 12px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  background: var(--gray-50); color: var(--gray-900);
+  line-height: 1.6; min-height: 100vh;
+}
+@media (min-width: 420px) { body { max-width: 420px; margin: 0 auto; box-shadow: 0 0 40px rgba(0,0,0,0.08); } }
+
+.page { display: none; animation: fadeUp 0.3s ease; }
+.page.active { display: block; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Landing */
+.hero {
+  background: linear-gradient(160deg, #1a56db 0%, #0f3a8a 100%);
+  padding: 40px 24px 44px; color: white; text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 80px; background: var(--gray-50); border-radius: 50%;
+}
+.advisor-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 20px; padding: 6px 14px; margin-top: 14px;
+  font-size: 13px; color: rgba(255,255,255,0.95); backdrop-filter: blur(4px);
+}
+.advisor-icon { font-size: 14px; }
+.hero h1 { font-size: 24px; font-weight: 700; margin-bottom: 10px; }
+.hero p { font-size: 14px; opacity: 0.85; line-height: 1.6; }
+.hero-tags { display: flex; justify-content: center; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.hero-tag {
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px; padding: 5px 12px; font-size: 12px;
+}
+
+.pain-cards { padding: 20px 16px 8px; }
+.pain-title { font-size: 15px; font-weight: 600; margin-bottom: 12px; text-align: center; color: var(--gray-700); }
+.pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pain-card {
+  background: white; border-radius: 10px; padding: 16px 12px;
+  box-shadow: var(--shadow); text-align: center;
+}
+.pain-card .emoji { font-size: 28px; margin-bottom: 6px; }
+.pain-card .name { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+.pain-card .desc { font-size: 11px; color: var(--gray-500); margin-top: 3px; line-height: 1.4; }
+
+.start-section { padding: 20px 16px; }
+.btn {
+  display: block; width: 100%; padding: 14px; border-radius: 10px;
+  font-size: 15px; font-weight: 600; cursor: pointer; border: none;
+  text-align: center; transition: 0.2s;
+}
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:active { background: var(--primary-dark); }
+.btn-white { background: white; color: var(--primary); border-radius: 8px; font-weight: 600; border: none; padding: 13px; cursor: pointer; }
+.start-note { text-align: center; font-size: 11px; color: var(--gray-500); margin-top: 8px; }
+
+/* Progress */
+.topbar {
+  display: flex; align-items: center; padding: 14px 16px;
+  background: white; border-bottom: 1px solid var(--gray-100);
+}
+.topbar-back { font-size: 18px; cursor: pointer; padding: 4px 8px; border: none; background: none; }
+.topbar-title { flex: 1; text-align: center; font-size: 14px; font-weight: 500; color: var(--gray-700); }
+.step-dots { display: flex; gap: 4px; }
+.step-dot { width: 20px; height: 3px; border-radius: 2px; background: var(--gray-200); }
+.step-dot.done { background: var(--primary); }
+.step-dot.now { background: var(--accent); }
+
+/* Questions */
+.q-wrap { padding: 20px 16px; }
+.q-text { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+.q-desc { font-size: 13px; color: var(--gray-500); margin-bottom: 18px; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt {
+  border: 1.5px solid var(--gray-200); border-radius: 10px;
+  padding: 14px; cursor: pointer; transition: 0.2s;
+  display: flex; align-items: center; gap: 12px;
+}
+.opt:active { transform: scale(0.98); }
+.opt.sel { border-color: var(--primary); background: var(--primary-light); }
+.opt-icon {
+  width: 36px; height: 36px; border-radius: 8px; background: var(--gray-100);
+  display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
+}
+.opt.sel .opt-icon { background: var(--primary); color: white; }
+.opt-body { flex: 1; }
+.opt-t { font-size: 14px; font-weight: 500; }
+.opt-d { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+.multi-confirm { margin-top: 14px; }
+
+/* Result */
+.res-header {
+  background: linear-gradient(160deg, #1a56db, #0f3a8a);
+  padding: 24px 20px 28px; color: white;
+}
+.res-header h2 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.res-header p { font-size: 13px; opacity: 0.8; }
+.res-header .scenario {
+  margin-top: 12px; background: rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 10px 14px; font-size: 12px; line-height: 1.5;
+}
+
+.pain-summary {
+  display: flex; gap: 8px; margin: -14px 16px 12px; position: relative; z-index: 1;
+}
+.pain-chip {
+  flex: 1; background: white; border-radius: 10px; padding: 12px 8px;
+  text-align: center; box-shadow: var(--shadow);
+}
+.pain-chip .icon { font-size: 22px; margin-bottom: 4px; }
+.pain-chip .label { font-size: 11px; color: var(--gray-500); }
+.pain-chip .val { font-size: 13px; font-weight: 600; margin-top: 2px; }
+
+/* Tabs */
+.tabs {
+  display: flex; background: var(--gray-100); border-radius: 8px;
+  padding: 3px; margin: 0 16px 14px;
+}
+.tab {
+  flex: 1; padding: 8px 4px; border-radius: 6px; font-size: 12px;
+  font-weight: 500; border: none; background: transparent;
+  cursor: pointer; color: var(--gray-500); transition: 0.2s;
+}
+.tab.on { background: white; color: var(--gray-900); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.panel { display: none; }
+.panel.on { display: block; }
+
+/* Card */
+.card { background: white; border-radius: var(--radius); padding: 18px; margin: 0 16px 12px; box-shadow: var(--shadow); }
+.card-h { font-size: 15px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.card-badge { width: 26px; height: 26px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+
+/* Pain + Solution pairs */
+.ps-item { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--gray-100); }
+.ps-item:last-child { border: none; margin-bottom: 0; padding-bottom: 0; }
+.ps-pain { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+.ps-pain-dot { width: 18px; height: 18px; border-radius: 50%; background: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 2px; }
+.ps-pain-text { font-size: 13px; font-weight: 500; color: #991b1b; }
+.ps-sol { display: flex; align-items: flex-start; gap: 8px; margin-left: 26px; }
+.ps-sol-dot { width: 18px; height: 18px; border-radius: 50%; background: #d1fae5; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 2px; }
+.ps-sol-text { font-size: 13px; color: var(--gray-700); line-height: 1.5; }
+
+/* Fund Path */
+.fund-path { padding: 4px 0; }
+.fp-node { display: flex; gap: 12px; padding-bottom: 16px; position: relative; }
+.fp-node:not(:last-child)::after {
+  content: ''; position: absolute; left: 15px; top: 34px; bottom: 0; width: 2px;
+  background: linear-gradient(var(--primary), var(--primary-light));
+}
+.fp-dot {
+  width: 32px; height: 32px; border-radius: 50%; background: var(--primary);
+  color: white; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0; z-index: 1;
+}
+.fp-dot.gold { background: var(--accent); }
+.fp-dot.grn { background: var(--green); }
+.fp-info { flex: 1; padding-top: 3px; }
+.fp-title { font-size: 13px; font-weight: 600; }
+.fp-desc { font-size: 12px; color: var(--gray-500); margin-top: 2px; line-height: 1.4; }
+.fp-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+.fp-tag { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 500; }
+.fp-tag-b { background: #dbeafe; color: #1d4ed8; }
+.fp-tag-g { background: #d1fae5; color: #065f46; }
+.fp-tag-o { background: #fef3c7; color: #92400e; }
+
+/* Benefit calc */
+.benefit-box {
+  background: var(--green-light); border: 1px solid #a7f3d0; border-radius: 10px;
+  padding: 14px; margin-top: 12px;
+}
+.benefit-title { font-size: 13px; font-weight: 600; color: var(--green); margin-bottom: 8px; }
+.benefit-row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; }
+.benefit-row .label { color: var(--gray-700); }
+.benefit-row .val { font-weight: 600; color: var(--green); }
+.benefit-total { border-top: 1px solid #a7f3d0; margin-top: 8px; padding-top: 8px; font-size: 14px; font-weight: 700; color: var(--green); text-align: right; }
+
+/* Steps */
+.step-item { display: flex; gap: 12px; margin-bottom: 12px; }
+.step-num {
+  width: 22px; height: 22px; border-radius: 6px; background: var(--primary);
+  color: white; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+}
+.step-text { font-size: 13px; line-height: 1.5; }
+.step-text b { color: var(--primary); font-weight: 600; }
+
+/* CTA */
+.cta {
+  background: linear-gradient(135deg, var(--primary), #7c3aed);
+  margin: 16px; border-radius: var(--radius); padding: 24px 20px; color: white; text-align: center;
+}
+.cta h3 { font-size: 17px; margin-bottom: 6px; }
+.cta p { font-size: 12px; opacity: 0.85; margin-bottom: 14px; line-height: 1.5; }
+
+/* Nav */
+.bnav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: white; border-top: 1px solid var(--gray-200);
+  display: flex; padding: 8px 16px; padding-bottom: max(8px, env(safe-area-inset-bottom)); z-index: 100;
+}
+.bnav button { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 5px; background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 10px; }
+.bnav button.on { color: var(--primary); }
+.bnav .ni { font-size: 18px; }
+
+/* Lead form */
+.lead-form { padding: 0 16px; }
+.form-title { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+.form-desc { font-size: 13px; color: var(--gray-500); margin-bottom: 18px; line-height: 1.5; }
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 12px; font-weight: 500; color: var(--gray-700); margin-bottom: 5px; display: block; }
+.form-input {
+  width: 100%; padding: 12px 14px; border: 1.5px solid var(--gray-200);
+  border-radius: 8px; font-size: 14px; outline: none; transition: 0.2s;
+}
+.form-input:focus { border-color: var(--primary); }
+.form-input::placeholder { color: var(--gray-300); }
+.form-tip { font-size: 11px; color: var(--gray-500); margin-top: 14px; text-align: center; line-height: 1.5; }
+.form-skip { text-align: center; margin-top: 12px; font-size: 13px; color: var(--gray-500); cursor: pointer; text-decoration: underline; }
+
+/* Save success */
+.save-success {
+  text-align: center; padding: 30px 20px;
+  background: var(--green-light); border-radius: 12px; margin: 16px;
+}
+.save-success .icon { font-size: 48px; margin-bottom: 12px; }
+.save-success h3 { font-size: 16px; color: var(--green); margin-bottom: 6px; }
+.save-success p { font-size: 13px; color: var(--gray-700); line-height: 1.5; }
+
+/* Admin backend */
+.admin-header {
+  background: #1e293b; color: white; padding: 14px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.admin-header h2 { font-size: 16px; font-weight: 600; }
+.admin-header .badge { background: var(--accent); padding: 3px 8px; border-radius: 4px; font-size: 11px; }
+.admin-stats { display: flex; gap: 8px; padding: 12px 16px; }
+.admin-stat {
+  flex: 1; background: white; border-radius: 8px; padding: 12px 8px;
+  text-align: center; box-shadow: var(--shadow);
+}
+.admin-stat .num { font-size: 20px; font-weight: 700; color: var(--primary); }
+.admin-stat .lbl { font-size: 10px; color: var(--gray-500); margin-top: 2px; }
+.admin-filters {
+  display: flex; gap: 8px; padding: 0 16px 12px; flex-wrap: wrap;
+}
+.admin-filter {
+  padding: 5px 10px; border-radius: 6px; font-size: 11px;
+  border: 1px solid var(--gray-200); background: white; cursor: pointer;
+  color: var(--gray-700);
+}
+.admin-filter.active { background: var(--primary); color: white; border-color: var(--primary); }
+.client-list { padding: 0 16px; }
+.client-card {
+  background: white; border-radius: 10px; padding: 14px;
+  box-shadow: var(--shadow); margin-bottom: 10px;
+}
+.client-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.client-name { font-size: 14px; font-weight: 600; }
+.client-time { font-size: 11px; color: var(--gray-500); }
+.client-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
+.client-tag { font-size: 10px; padding: 2px 7px; border-radius: 4px; }
+.ct-mode { background: #dbeafe; color: #1d4ed8; }
+.ct-scale { background: #fef3c7; color: #92400e; }
+.ct-pain { background: #fee2e2; color: #991b1b; }
+.ct-need { background: #d1fae5; color: #065f46; }
+.client-bottom { display: flex; justify-content: space-between; align-items: center; }
+.client-status { font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 4px; }
+.status-new { background: #dbeafe; color: #1d4ed8; }
+.status-contacted { background: #fef3c7; color: #92400e; }
+.status-converted { background: #d1fae5; color: #065f46; }
+.client-actions { display: flex; gap: 8px; }
+.client-btn {
+  padding: 5px 10px; border-radius: 5px; font-size: 11px; font-weight: 500;
+  border: 1px solid var(--gray-200); background: white; cursor: pointer;
+}
+.client-btn.primary { background: var(--primary); color: white; border-color: var(--primary); }
+.admin-export {
+  margin: 12px 16px; padding: 12px; background: var(--gray-100);
+  border-radius: 8px; display: flex; align-items: center; justify-content: space-between;
+}
+.admin-export span { font-size: 12px; color: var(--gray-700); }
+</style>
+</head>
+<body>
+
+<!-- ===== LANDING ===== -->
+<div class="page active" id="pg-home">
+  <div class="hero">
+    <h1>阿里巴巴国际站商家<br>跨境收汇 · 资金方案规划</h1>
+    <p>帮您理清出口→收汇→网站资源→财税合规全链路<br>找到最适合的资金解决方案</p>
+    <div class="hero-tags">
+      <span class="hero-tag">通关方案</span>
+      <span class="hero-tag">资金路径</span>
+      <span class="hero-tag">网站资源</span>
+      <span class="hero-tag">财税合规</span>
+    </div>
+  </div>
+
+  <div class="pain-cards">
+    <div class="pain-title">您是否遇到这些困扰？</div>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="emoji">💸</div>
+        <div class="name">钱回不来</div>
+        <div class="desc">海外货款到账慢、路径不清晰</div>
+      </div>
+      <div class="pain-card">
+        <div class="emoji">🎯</div>
+        <div class="name">活动太多</div>
+        <div class="desc">平台活动多，不知如何选择匹配</div>
+      </div>
+      <div class="pain-card">
+        <div class="emoji">📑</div>
+        <div class="name">不懂合规</div>
+        <div class="desc">出口合规要求复杂无从下手</div>
+      </div>
+      <div class="pain-card">
+        <div class="emoji">💰</div>
+        <div class="name">成本太高</div>
+        <div class="desc">手续费高、税负重、利润薄</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="start-section">
+    <button class="btn btn-primary" onclick="start()">立即规划我的资金方案</button>
+    <p class="start-note">3分钟回答几个问题 · 获取专属方案 · 数据保密</p>
+  </div>
+</div>
+
+<!-- ===== QUESTIONS ===== -->
+<div class="page" id="pg-q">
+  <div class="topbar">
+    <button class="topbar-back" onclick="prevStep()">‹</button>
+    <div class="step-dots" id="dots"></div>
+    <div style="width:30px;"></div>
+  </div>
+  <div class="q-wrap" id="q-area"></div>
+</div>
+
+<!-- ===== LEAD CAPTURE ===== -->
+<!-- pg-lead removed: 留资已整合到结果页底部CTA -->
+
+<!-- ===== SALES PROMOTION CENTER ===== -->
+<div class="page" id="pg-admin">
+  <div class="admin-header">
+    <h2>销售推广中心</h2>
+    <span class="badge">生成专属链接</span>
+  </div>
+  
+  <div class="card" style="margin:16px;">
+    <div class="card-h"><span class="card-badge" style="background:var(--primary-light);color:var(--primary);">🔗</span>生成我的推广链接</div>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:12px;">填入您的信息，生成专属推广链接。客户通过您的链接进入并留资后，数据会自动标记为您带来的客户。</p>
+    <input type="text" id="gen-name" placeholder="您的姓名（必填）" style="width:100%;padding:10px 12px;border:1px solid #e0e0e0;border-radius:8px;font-size:14px;margin-bottom:8px;box-sizing:border-box;">
+    <input type="text" id="gen-company" placeholder="拍档公司名称（必填）" style="width:100%;padding:10px 12px;border:1px solid #e0e0e0;border-radius:8px;font-size:14px;margin-bottom:12px;box-sizing:border-box;">
+    <button class="btn btn-primary" style="width:100%;" onclick="generateLink()">生成专属链接 & 二维码</button>
+    
+    <div id="gen-result" style="display:none;margin-top:16px;">
+      <div style="background:var(--gray-50);border-radius:8px;padding:12px;margin-bottom:12px;">
+        <div style="font-size:12px;color:var(--gray-500);margin-bottom:4px;">您的专属链接：</div>
+        <div id="gen-url" style="font-size:13px;color:var(--primary);word-break:break-all;font-weight:500;"></div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="client-btn primary" style="flex:1;" onclick="copyLink()">复制链接</button>
+        <button class="client-btn" style="flex:1;" onclick="shareWechat()">分享到微信</button>
+      </div>
+      <div style="text-align:center;margin-top:16px;">
+        <div style="font-size:12px;color:var(--gray-500);margin-bottom:8px;">扫码直达 ↓</div>
+        <img id="gen-qr" style="width:180px;height:180px;border:1px solid var(--gray-200);border-radius:8px;" src="" alt="QR Code">
+      </div>
+    </div>
+  </div>
+  
+  <div class="card" style="margin:16px;">
+    <div class="card-h"><span class="card-badge" style="background:var(--accent-light);color:var(--accent);">📊</span>推广数据（示例）</div>
+    <div class="admin-stats">
+      <div class="admin-stat"><div class="num">47</div><div class="lbl">总客户</div></div>
+      <div class="admin-stat"><div class="num">12</div><div class="lbl">已联系</div></div>
+      <div class="admin-stat"><div class="num">5</div><div class="lbl">已成交</div></div>
+      <div class="admin-stat"><div class="num">38%</div><div class="lbl">转化率</div></div>
+    </div>
+    <p style="font-size:12px;color:var(--gray-500);text-align:center;margin-top:8px;">* 实际数据请到汇总表格中按销售姓名筛选查看</p>
+  </div>
+
+  <div class="card" style="margin:16px;">
+    <div class="card-h"><span class="card-badge" style="background:var(--green-light);color:var(--green);">💡</span>推广话术参考</div>
+    <div style="font-size:13px;color:var(--gray-700);line-height:1.8;">
+      <p style="margin-bottom:8px;"><b>朋友圈/群发：</b></p>
+      <div style="background:var(--gray-50);padding:10px;border-radius:8px;font-size:12px;margin-bottom:12px;">
+        "做跨境出口，收汇路径选对了吗？🤔<br>
+        1分钟测一测，帮你找到最省钱的资金方案👇<br>
+        [链接]"
+      </div>
+      <p style="margin-bottom:8px;"><b>1V1发送：</b></p>
+      <div style="background:var(--gray-50);padding:10px;border-radius:8px;font-size:12px;">
+        "X总，分享个工具给您——针对跨境出口的收汇方案测评，<br>
+        填几个问题就能看到适合您的资金路径和节省收益。<br>
+        很多客户用了觉得挺清楚的👇"
+      </div>
+    </div>
+  </div>
+  
+  <div style="padding:16px;text-align:center;">
+    <button class="btn btn-outline" style="border:1.5px solid var(--primary);color:var(--primary);background:white;" onclick="go('pg-home')">返回客户端首页</button>
+  </div>
+</div>
+
+<!-- ===== RESULT ===== -->
+<div class="page" id="pg-result">
+  <div class="res-header">
+    <h2>您的专属资金方案</h2>
+    <p id="res-desc">基于您的出口模式和资金需求定制</p>
+    <div class="scenario" id="res-scenario"></div>
+  </div>
+
+  <div class="pain-summary" id="pain-chips"></div>
+
+  <div class="tabs">
+    <button class="tab on" onclick="stab(event,'t1')">痛点&方案</button>
+    <button class="tab" onclick="stab(event,'t2')">资金路径</button>
+    <button class="tab" onclick="stab(event,'t4')">落地步骤</button>
+    <button class="tab" onclick="stab(event,'t3')">收益测算</button>
+  </div>
+
+  <div class="panel on" id="t1"></div>
+  <div class="panel" id="t2"></div>
+  <div class="panel" id="t3"></div>
+  <div class="panel" id="t4"></div>
+
+  <div class="bnav">
+    <button class="on" onclick="go('pg-home')"><span class="ni">🏠</span>首页</button>
+    <button onclick="alert('演示：我的方案')"><span class="ni">📋</span>我的方案</button>
+    <button onclick="start()"><span class="ni">🔄</span>重新规划</button>
+    <button onclick="go('pg-admin')"><span class="ni">⚙️</span>推广中心</button>
+  </div>
+  <div style="height:60px;"></div>
+</div>
+
+<script>
+// ===== CONFIG: Google Sheets后端URL（部署Apps Script后替换） =====
+const SHEET_API = ''; // 部署后填入你的 Google Apps Script Web App URL
+
+// ===== URL参数解析：识别销售来源 =====
+const urlParams = new URLSearchParams(window.location.search);
+const refSales = urlParams.get('s') || ''; // 销售姓名
+const refCompany = urlParams.get('c') || ''; // 拍档公司
+const refSource = refSales ? `${refCompany ? refCompany+'-' : ''}${refSales}` : '直接访问';
+
+// 如果有销售来源，首页显示专属顾问标识
+window.addEventListener('DOMContentLoaded', () => {
+  if(refSales) {
+    const badge = document.createElement('div');
+    badge.className = 'advisor-badge';
+    badge.innerHTML = `<span class="advisor-icon">👤</span> 您的专属顾问：<b>${refSales}</b>${refCompany ? ' · '+refCompany : ''}`;
+    const hero = document.querySelector('.hero');
+    if(hero) hero.appendChild(badge);
+  }
+});
+
+const QS = [
+  {
+    q: '您目前怎么把货卖到海外的？',
+    d: '我们根据您的出口方式匹配最优资金通道',
+    opts: [
+      { i:'🌐', t:'跨境电商平台（阿里国际站/亚马逊/Temu等）', d:'线上接单，平台发货或自发货', v:'platform' },
+      { i:'🏭', t:'传统外贸（接大客户订单）', d:'线下接单，正式报关出口', v:'trade' },
+      { i:'🏬', t:'海外仓模式', d:'先把货备到海外仓，再线上卖', v:'warehouse' },
+      { i:'📦', t:'混合模式/不确定', d:'多种方式都有，或刚开始做', v:'mixed' }
+    ]
+  },
+  {
+    q: '您的货物出口一般走什么渠道？',
+    d: '这决定了您适合哪种通关+收汇组合',
+    opts: [
+      { i:'✈️', t:'平台物流/小包快递直发', d:'通过平台或货代直接寄快递出境', v:'express' },
+      { i:'🚢', t:'自己报关出口（有报关单）', d:'有进出口权，正式报关取得报关单', v:'formal' },
+      { i:'📋', t:'通过货代/外综服代理出口', d:'货代帮忙报关，自己不直接出', v:'agent' },
+      { i:'🤷', t:'没太关注/不确定', d:'货是出去了，但具体怎么报关不太清楚', v:'unclear' }
+    ]
+  },
+  {
+    q: '海外赚到的钱，目前怎么收回来的？',
+    d: '了解您当前的资金回流方式（可多选）',
+    multi: true,
+    opts: [
+      { i:'🏦', t:'线下银行对公账户', d:'买家直接付款到国内银行对公账户', v:'bank_public' },
+      { i:'🌏', t:'香港或离岸账户', d:'境外公司收款后部分转回国内使用', v:'offshore' },
+      { i:'📦', t:'使用国际站平台收款', d:'信保/ACP等阿里国际站平台收款', v:'alibaba_platform' },
+      { i:'💳', t:'其他平台收款', d:'XT/PP/万里汇等第三方平台收款', v:'other_platform' },
+      { i:'👤', t:'个人收款', d:'提现到个人卡或通过朋友代收', v:'personal' }
+    ]
+  },
+  {
+    q: '关于收汇和资金，最困扰您的是什么？',
+    d: '帮我们精准定位您的核心需求（可多选）',
+    multi: true,
+    opts: [
+      { i:'🗺️', t:'没有适配的收汇路径', d:'不清楚哪种方式最适合自己的业务', v:'no_path' },
+      { i:'🎯', t:'想享受更多国际站资源', d:'希望通过合规获得更多平台权益和活动', v:'platform_resource' },
+      { i:'📑', t:'想合规但不知怎么做', d:'政策越来越严，想合规但流程复杂', v:'compliance' },
+      { i:'🏦', t:'有金融需求', d:'需要信贷/融资/信保等金融支持', v:'finance' }
+    ]
+  },
+  {
+    q: '年出口金额大概在什么范围（美元）？',
+    d: '用于测算方案收益和最优模式',
+    opts: [
+      { i:'🌱', t:'100万美元以下', d:'起步期', v:'s' },
+      { i:'📈', t:'100-200万美元', d:'成长期', v:'m' },
+      { i:'🚀', t:'200-500万美元', d:'规模扩张期', v:'l' },
+      { i:'💎', t:'500-1000万美元', d:'大客户', v:'xl' },
+      { i:'🏆', t:'1000万美元以上', d:'头部大卖', v:'xxl' }
+    ]
+  }
+];
+
+let step = 0, ans = {}, multiSel = [];
+
+function start() { step = 0; ans = {}; multiSel = []; go('pg-q'); render(); }
+
+function render() {
+  const q = QS[step];
+  // dots
+  let dots = '';
+  for(let i=0;i<QS.length;i++) dots += `<div class="step-dot ${i<step?'done':i===step?'now':''}"></div>`;
+  document.getElementById('dots').innerHTML = dots;
+  // content
+  let h = `<div class="q-text">${q.q}</div><div class="q-desc">${q.d}</div><div class="opts">`;
+  q.opts.forEach((o,i) => {
+    h += `<div class="opt" id="o${i}" onclick="${q.multi?`toggle(${i},'${o.v}')`:`pick(${i},'${o.v}')`}">
+      <div class="opt-icon">${o.i}</div><div class="opt-body"><div class="opt-t">${o.t}</div><div class="opt-d">${o.d}</div></div></div>`;
+  });
+  h += '</div>';
+  if(q.multi && step === QS.length - 1) {
+    h += `<div class="multi-confirm"><button class="btn btn-primary" onclick="confirmM()">确认，看我的方案</button></div>`;
+  } else if(q.multi) {
+    h += `<div class="multi-confirm"><button class="btn btn-primary" onclick="confirmM()">确认，下一题</button></div>`;
+  }
+  document.getElementById('q-area').innerHTML = h;
+}
+
+function pick(i, v) {
+  document.querySelectorAll('.opt').forEach(e=>e.classList.remove('sel'));
+  document.getElementById('o'+i).classList.add('sel');
+  ans[step] = v;
+  setTimeout(()=>{ step<QS.length-1?(step++,render()):result(); }, 250);
+}
+function toggle(i, v) {
+  const el = document.getElementById('o'+i);
+  if(el.classList.contains('sel')) { el.classList.remove('sel'); multiSel = multiSel.filter(x=>x!==v); }
+  else { el.classList.add('sel'); multiSel.push(v); }
+}
+function confirmM() { ans[step] = [...multiSel]; multiSel = []; step<QS.length-1?(step++,render()):result(); }
+function prevStep() { if(step>0){step--;render();}else go('pg-home'); }
+
+function submitLead() {
+  const phone = document.getElementById('lead-phone').value.trim();
+  if(!phone || phone.length < 11) { alert('请填写正确的手机号'); return; }
+  
+  const modeLabels = {platform:'电商平台',trade:'传统外贸',warehouse:'海外仓',mixed:'混合模式'};
+  const scaleLabels = {s:'<100万$',m:'100-200万$',l:'200-500万$',xl:'500-1000万$',xxl:'1000万$+'};
+  const painLabels = {no_path:'收汇路径',platform_resource:'平台资源',compliance:'合规需求',finance:'金融需求'};
+  const payLabels = {bank_public:'银行对公',offshore:'离岸账户',alibaba_platform:'国际站收款',other_platform:'其他平台',personal:'个人收款'};
+  
+  const payArr = Array.isArray(ans[2]) ? ans[2] : [ans[2]];
+  const painArr = Array.isArray(ans[3]) ? ans[3] : [ans[3]];
+  
+  const lead = {
+    timestamp: new Date().toISOString(),
+    phone,
+    company: document.getElementById('lead-company').value.trim(),
+    name: document.getElementById('lead-name').value.trim(),
+    // 来源追踪
+    sales: refSales,
+    salesCompany: refCompany,
+    source: refSource,
+    // 诊断结构化数据
+    mode: modeLabels[ans[0]] || ans[0],
+    shipping: ans[1],
+    payment: payArr.map(p => payLabels[p]||p).join('、'),
+    needs: painArr.map(p => painLabels[p]||p).join('、'),
+    scale: scaleLabels[ans[4]] || ans[4],
+    // 原始值（便于系统处理）
+    raw: JSON.stringify(ans)
+  };
+  
+  // 本地存储
+  savedLeads.push({...lead, time: new Date().toLocaleString('zh-CN'), answers: {...ans}});
+  
+  // POST到Google Sheets后端
+  if(SHEET_API) {
+    fetch(SHEET_API, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(lead)
+    }).catch(()=>{}); // 静默失败，不影响客户体验
+  }
+  
+  document.getElementById('lead-form-area').innerHTML = `
+    <div style="text-align:center;padding:20px;color:var(--green);font-weight:600;">
+      ✓ 已提交成功！<br>
+      <span style="font-size:13px;color:var(--gray-500);font-weight:400;">${refSales ? refSales+'将' : '专属顾问将'}在24小时内与您联系</span>
+    </div>`;
+}
+
+let savedLeads = [
+  // Demo data
+  { phone:'138****2345', company:'深圳盛腾科技', name:'王总', time:'2026-06-12 14:30', answers:{0:'platform',1:'express',2:['personal','other_platform'],3:['no_path','compliance'],4:'m'} },
+  { phone:'139****8901', company:'义乌锦程贸易', name:'陈经理', time:'2026-06-12 11:20', answers:{0:'mixed',1:'agent',2:['offshore','alibaba_platform'],3:['platform_resource'],4:'l'} },
+  { phone:'136****4567', company:'广州优品服饰', name:'李姐', time:'2026-06-11 16:45', answers:{0:'platform',1:'express',2:['personal'],3:['no_path','finance'],4:'m'} },
+  { phone:'158****7890', company:'宁波海盛电子', name:'张工', time:'2026-06-11 09:10', answers:{0:'warehouse',1:'formal',2:['bank_public','alibaba_platform'],3:['platform_resource','compliance'],4:'xl'} },
+  { phone:'135****1234', company:'青岛鼎丰工艺品', name:'赵总', time:'2026-06-10 20:30', answers:{0:'trade',1:'formal',2:['bank_public'],3:['finance'],4:'l'} },
+];
+
+function result() {
+  go('pg-result');
+  const mode = ans[0], ship = ans[1], pay = ans[2]||[], pains = ans[3]||[], scale = ans[4];
+  const isMultiPay = Array.isArray(pay);
+  const payArr = isMultiPay ? pay : [pay];
+  
+  // Determine key flags
+  const hasPersonal = payArr.includes('personal');
+  const hasOffshore = payArr.includes('offshore');
+  const hasBankPublic = payArr.includes('bank_public');
+  const hasAlibabaPlatform = payArr.includes('alibaba_platform');
+  const hasOtherPlatform = payArr.includes('other_platform');
+  const isLargeScale = (scale === 'l' || scale === 'xl' || scale === 'xxl');
+  
+  // Scenario text
+  const modeT = {platform:'跨境电商平台卖家',trade:'传统外贸企业',warehouse:'海外仓卖家',mixed:'混合模式卖家'}[mode];
+  const scaleT = {s:'100万美元以下',m:'100-200万美元',l:'200-500万美元',xl:'500-1000万美元',xxl:'1000万美元以上'}[scale];
+  document.getElementById('res-scenario').innerHTML = `${modeT} · 年出口${scaleT} · ${pains.length}个核心需求待解决`;
+  
+  // Pain chips based on new Q4
+  const chipData = [];
+  if(pains.includes('no_path')) chipData.push({icon:'🗺️',label:'收汇路径'});
+  if(pains.includes('platform_resource')) chipData.push({icon:'🎯',label:'平台资源'});
+  if(pains.includes('compliance')) chipData.push({icon:'📑',label:'合规需求'});
+  if(pains.includes('finance')) chipData.push({icon:'🏦',label:'金融需求'});
+  if(chipData.length===0) chipData.push({icon:'✨',label:'方案优化'});
+  document.getElementById('pain-chips').innerHTML = chipData.map(c=>`
+    <div class="pain-chip"><div class="icon">${c.icon}</div><div class="val">${c.label}</div></div>
+  `).join('');
+
+  // === Pre-compute mixed channel detection (used across all tabs) ===
+  const hasPublicChannel = hasBankPublic || hasAlibabaPlatform;
+  const hasPrivateChannel = hasPersonal || hasOffshore || hasOtherPlatform;
+  const isMixedChannel = hasPublicChannel && hasPrivateChannel;
+  const formalExport = mode==='warehouse' ? '9810报关出口至海外仓' : mode==='trade' ? '0110一般贸易报关出口' : '正式报关出口';
+  const formalTag = mode==='warehouse' ? '9810' : mode==='trade' ? '0110' : '正式报关';
+  const formalBenefit = mode==='warehouse' ? '支持预退税' : '退税率13%';
+
+  // === TAB 1: Pain & Solution ===
+  let ps = [];
+  if(pains.includes('no_path')) {
+    if(isMixedChannel) {
+      ps.push({ pain:'多种收款方式并存，缺少清晰的分配策略', sol:
+        '为您设计"大包小拆分"方案：大单走信保对公收汇（签约钻享享服务费折扣+结汇返利），小单走ACP灵活提现（签约尊享享费率优惠+汇率补贴）。两个通道各走最优路径，权益还能叠加。'
+      });
+    } else if(hasPrivateChannel) {
+      ps.push({ pain:'当前收汇路径不清晰，资金安全性和可持续性存疑', sol:
+        '为您匹配信保/ACP收汇通道，配合9610跨境电商申报模式，实现"交易→通关→收汇→结汇"全链路合规闭环。每笔资金有报关单+交易数据对应，来源清晰，账户安全无忧。'
+      });
+    } else {
+      ps.push({ pain:'现有收汇方式可能未充分享受平台权益', sol:
+        '建议将收汇集中至国际站信保/ACP通道，不仅资金安全有保障，还能享受交易服务费折扣、结汇返利等专属权益，让收汇本身也能为您省钱。'
+      });
+    }
+  }
+  if(pains.includes('platform_resource')) {
+    if(isLargeScale) {
+      ps.push({ pain:'希望获得更多国际站平台资源和权益', sol:
+        '您的规模已达到大客户权益门槛。通过信保/ACP收汇并签约专属计划，可享受：海景房流量资源、1V1专属服务、总裁研学名额、品牌出海权益等多项VIP资源，助力业务增长。'
+      });
+    } else {
+      ps.push({ pain:'希望获得更多国际站平台资源和权益', sol:
+        '即使规模暂时达不到钻享/尊享门槛，当前也有多项权益可享：<b>①GMV挑战赛</b>——每月认领任务达成即领最高¥4160积分+汇率优惠券+欧洲大买家定向流量；<b>②保效商家资金权益</b>——新签星级保效方案享交易服务费2-8折+金融利率6.5%；<b>③ACP提现付款积分活动</b>——每月完成提现/付款目标送积分抵扣手续费+优惠券；<b>④TA Plus保障</b>——信保额度最高4倍+拒付兜底+无忧退+丢失破损保障。通过信保/ACP收汇即可参与以上所有活动。'
+      });
+    }
+  }
+  if(pains.includes('compliance')) {
+    ps.push({ pain:'政策趋严，想合规但不知从何下手', sol:
+      '合规不复杂——核心就是让"交易流、物流、资金流"三流匹配。我们帮您搭建：信保/ACP合规收汇 + 9610/正式报关出口 + 财税方案一体化架构，全程有人帮您理清楚，不需要自己研究政策。'
+    });
+  }
+  if(pains.includes('finance')) {
+    ps.push({ pain:'需要融资支持，缓解备货/账期/周转压力', sol:
+      '平台专属金融服务"生意融"为您提供全链路融资方案：<b>①订单融资</b>——下单当天即可提前收款，最高¥100万，年利率低至5.5%；<b>②信用证融资</b>——收到LC即可备货融资（最高¥300万），交单后尾款融资（最高¥3000万，年利率低至4.05%）；<b>③信用借款</b>——纯信用无抵押，最高¥300万，年利率6%起，多家银行可选。关键优势：<b>信保/ACP交易越多，额度越高、利率越低</b>（ACP L3/L4或5星/钻享客户享最优利率）。'
+    });
+  }
+  // Additional based on pay method
+  if(hasPersonal && !pains.includes('no_path')) {
+    ps.push({ pain:'个人收款模式存在可持续性隐患', sol:
+      '为您规划从个人收款平滑过渡到信保/ACP合规收汇的方案，配合9610出口模式，不仅资金安全，还能享受退税收益和平台权益，整体收益远超当前模式。'
+    });
+  }
+  if(ps.length===0) {
+    ps.push({ pain:'当前业务缺少系统化的资金规划', sol:'为您设计"信保/ACP合规收汇 + 出口报关 + 财税优化"一体化方案，让每一笔海外收入都走最优路径，既安全又省钱，还能享受平台权益。' });
+  }
+
+  document.getElementById('t1').innerHTML = `<div class="card"><div class="card-h"><span class="card-badge" style="background:var(--primary-light);color:var(--primary);">💡</span>您的痛点 & 解决思路</div>
+    ${ps.map(p=>`<div class="ps-item"><div class="ps-pain"><div class="ps-pain-dot">!</div><div class="ps-pain-text">${p.pain}</div></div><div class="ps-sol"><div class="ps-sol-dot">✓</div><div class="ps-sol-text">${p.sol}</div></div></div>`).join('')}
+  </div>`;
+
+  // === TAB 2: Fund Path ===
+  let nodes = [];
+  if(isMixedChannel) {
+    // ===== 混合收汇：双轨拆分路径 =====
+    // 客户同时有对公+对私通道 → 建议按订单规模拆分
+    // 9610仅在选了合规需求时推荐，否则只优化收汇通道
+    const wantCompliance = pains.includes('compliance');
+    if(isLargeScale) {
+      // 大客户混合收汇 → 钻享+尊享双计划叠加
+      nodes = [
+        {n:'1',t:'订单分类 · 按规模拆分收汇通道',d:'大单/整柜走信保对公收汇，平台零散单/小单走ACP灵活提现，按业务实际灵活分配比例',c:'gold',tags:[['o','大包小拆分'],['b','按比例配置']]}
+      ];
+      if(wantCompliance) {
+        nodes.push({n:'2',t:'大单路径：'+formalExport+'（合规出口）',d:'大额订单正式报关获得完整报关单，匹配信保对公收汇，三流匹配',tags:[['b',formalTag],['g',formalBenefit]]});
+      } else {
+        nodes.push({n:'2',t:'大单路径：信保收汇至对公账户',d:'大额订单货款通过信保通道收至对公，资金来源清晰，安全高效',tags:[['b','信保收汇'],['g','安全高效']]});
+      }
+      nodes.push({n:'3',t:'大单权益：签约钻享计划',d:'年GMV达标享服务费折扣（低至2折）+结汇返利（40-80pips），直接提升利润',tags:[['g','钻享权益'],['o','结汇返利']]});
+      if(wantCompliance) {
+        nodes.push({n:'4',t:'小单路径：9610跨境电商申报 + ACP收汇',d:'零散订单走9610合规出口，ACP收汇后灵活对私提现，手续费低至0.05%',tags:[['b','9610合规'],['g','尊享权益']]});
+      } else {
+        nodes.push({n:'4',t:'小单路径：ACP收汇 → 灵活提现',d:'零散订单货款通过ACP收汇，对私提现手续费低至0.05%，月达标享汇率补贴',tags:[['b','ACP提现'],['g','尊享权益']]});
+      }
+      nodes.push({n:'5',t:'双计划叠加 · 权益最大化',d:'钻享+尊享权益叠加：海景房流量、1V1服务、品牌出海、总裁研学等全部解锁'+(wantCompliance?'，两条路径分别可申报退税':''),c:'grn',tags:[['g','权益全享'],['g','越用越省']]});
+    } else {
+      // 中小客户混合收汇 → 引导归集优化
+      nodes = [
+        {n:'1',t:'收汇通道梳理 · 按规模分流',d:'建议按订单大小分流：大单走信保对公收汇，碎单走ACP灵活提现，各走最优通道',c:'gold',tags:[['o','分流优化'],['b','按比例配置']]}
+      ];
+      if(wantCompliance) {
+        nodes.push({n:'2',t:'大单：'+formalExport+' + 信保对公',d:'较大金额订单正式报关出口，通过信保收汇至对公账户，三流匹配合规',tags:[['b',formalTag],['g','合规结汇']]});
+        nodes.push({n:'3',t:'小单：9610申报 + ACP灵活提现',d:'平台碎片订单走9610跨境电商申报，ACP收汇后灵活对公/对私提现',tags:[['b','9610'],['g','灵活提现']]});
+        nodes.push({n:'4',t:'双通道退税',d:'大单正式报关可直接退税13%；小单9610无票免税、有票也可退，两条路各享政策红利',tags:[['g','退税/免税'],['g','双路径享受']]});
+      } else {
+        nodes.push({n:'2',t:'大单：信保收汇至对公',d:'较大金额订单通过信保通道收汇至对公账户，资金来源清晰，安全可追溯',tags:[['b','信保收汇'],['g','安全高效']]});
+        nodes.push({n:'3',t:'小单：ACP收汇灵活提现',d:'平台碎片订单通过ACP收汇，灵活选择对公/对私提现，手续费优惠',tags:[['b','ACP提现'],['g','灵活便捷']]});
+        nodes.push({n:'4',t:'平台权益积累',d:'信保+ACP双通道使用，积累交易数据享受更多权益和金融服务',tags:[['g','权益成长'],['g','金融支持']]});
+      }
+      nodes.push({n:'5',t:'规模增长 → 双计划解锁',d:'对公GMV达200万美金→解锁钻享；ACP月出金达40万美金→解锁尊享，权益越用越多',c:'grn',tags:[['g','钻享门槛'],['g','尊享门槛']]});
+    }
+  } else if(mode==='warehouse') {
+    // ===== 海外仓模式（纯对公或纯对私）→ 9810 =====
+    if(isLargeScale && hasPublicChannel) {
+      // 大额对公海外仓 → 9810 + 钻享
+      nodes = [
+        {n:'1',t:'9810正式报关出口至海外仓',d:'货物整批报关出口至境外仓库，获得正式报关单',tags:[['b','9810报关'],['g','支持预退税']]},
+        {n:'2',t:'海外仓销售发货',d:'平台/独立站卖出后从海外仓发货至买家',tags:[['b','按需销售']]},
+        {n:'3',t:'信保收汇至对公账户',d:'通过信保通道收款，资金直达企业对公账户',tags:[['g','合规结汇'],['b','平台权益']]},
+        {n:'4',t:'签约钻享计划',d:'年GMV达到门槛，享受交易服务费折扣+结汇返利',c:'gold',tags:[['o','费率优惠'],['g','结汇返利']]},
+        {n:'5',t:'申请出口退税（支持预退税）',d:'9810支持货物出口即可预申请退税，缓解资金压力',c:'grn',tags:[['g','预退税'],['g','率13%']]}
+      ];
+    } else if(isLargeScale && hasPrivateChannel) {
+      // 大额对私海外仓 → 9810 + 尊享
+      nodes = [
+        {n:'1',t:'9810正式报关出口至海外仓',d:'货物整批报关出口至境外仓库，获得正式报关单',tags:[['b','9810报关'],['g','支持预退税']]},
+        {n:'2',t:'海外仓销售发货',d:'平台/独立站卖出后从海外仓发货至买家',tags:[['b','按需销售']]},
+        {n:'3',t:'ACP收汇 + 灵活提现',d:'通过ACP收款，支持对公/对私提现，签约尊享享费率优惠',c:'gold',tags:[['g','灵活提现'],['o','费率低至0.05%']]},
+        {n:'4',t:'签约尊享优惠计划',d:'月出金达标即享提现手续费折扣+汇率补贴',tags:[['o','汇率补贴'],['g','越用越省']]},
+        {n:'5',t:'出口退税（支持预退税）+ 权益升级',d:'9810支持预退税缓解资金压力，持续达标解锁更多权益',c:'grn',tags:[['g','预退税'],['g','权益叠加']]}
+      ];
+    } else {
+      nodes = [
+        {n:'1',t:'9810正式报关出口至海外仓',d:'货物整批报关出口至境外仓库，获得正式报关单',tags:[['b','9810报关'],['g','支持预退税']]},
+        {n:'2',t:'海外仓销售发货',d:'平台/独立站卖出后从海外仓发货至买家',tags:[['b','按需销售']]},
+        {n:'3',t:'信保/ACP归集收汇',d:'通过国际站收汇通道归集多平台回款，合规结汇到对公',c:'gold',tags:[['g','归集高效'],['b','平台权益']]},
+        {n:'4',t:'申请出口退税（支持预退税）',d:'9810支持货物出口即可预申请退税，缓解资金压力',tags:[['g','预退税'],['g','率13%']]},
+        {n:'5',t:'资金循环 + 权益解锁',d:'规模增长后可签约钻享/尊享计划，享受更多费率优惠和平台资源',c:'grn',tags:[['g','资金加速'],['g','权益成长']]}
+      ];
+    }
+  } else if(mode==='trade') {
+    // ===== 传统外贸 → 0110一般贸易 =====
+    if(isLargeScale && hasPublicChannel) {
+      nodes = [
+        {n:'1',t:'接单 + 0110一般贸易报关出口',d:'传统外贸大单，正式报关出口获得报关单',tags:[['b','0110正式报关']]},
+        {n:'2',t:'信保收汇至对公',d:'通过信保通道收款到企业对公账户，安全高效',tags:[['b','银行结汇'],['g','信保保障']]},
+        {n:'3',t:'签约钻享计划',d:'年GMV达标享受交易服务费折扣+结汇返利',c:'gold',tags:[['o','费率优惠'],['g','结汇返利']]},
+        {n:'4',t:'出口退税申报',d:'退税率13%，扣除拿票成本约9%，净收益约4%',tags:[['g','利润+4%']]},
+        {n:'5',t:'完整记录提升融资能力',d:'交易数据积累提升银行授信，解锁平台金融服务',c:'grn',tags:[['g','融资便利'],['g','权益叠加']]}
+      ];
+    } else if(isLargeScale && hasPrivateChannel) {
+      nodes = [
+        {n:'1',t:'接单 + 0110一般贸易报关出口',d:'传统外贸大单，正式报关出口获得报关单',tags:[['b','0110正式报关']]},
+        {n:'2',t:'ACP收汇 + 灵活提现',d:'通过ACP收款到账后对公/对私灵活提现',tags:[['b','灵活提现'],['g','合规收汇']]},
+        {n:'3',t:'签约尊享优惠计划',d:'月出金达标享提现手续费折扣+汇率补贴',c:'gold',tags:[['o','费率低至0.05%'],['g','汇率补贴']]},
+        {n:'4',t:'出口退税申报',d:'退税率13%，正式报关单+发票+合同完整匹配',tags:[['g','利润+4%']]},
+        {n:'5',t:'持续达标 + 权益升级',d:'持续达成目标享附加权益，对公提现手续费全免，年上限100万',c:'grn',tags:[['g','越用越省'],['g','手续费全免']]}
+      ];
+    } else {
+      nodes = [
+        {n:'1',t:'接单 + 0110一般贸易报关出口',d:'传统外贸大单，正式报关出口获得报关单',tags:[['b','0110正式报关']]},
+        {n:'2',t:'信保收汇至对公',d:'通过信保通道收款到企业对公账户，安全高效',tags:[['b','银行结汇'],['g','信保保障']]},
+        {n:'3',t:'进项发票管理',d:'与供应商取得增值税专票，建立发票档案',c:'gold',tags:[['o','退税必备']]},
+        {n:'4',t:'出口退税申报',d:'退税率13%，扣除拿票成本约9%，净收益约4%',tags:[['g','利润+4%']]},
+        {n:'5',t:'合规经营 + 融资加持',d:'完整报关+退税记录可提升银行授信额度',c:'grn',tags:[['g','信用加分'],['g','融资便利']]}
+      ];
+    }
+  } else if(hasPrivateChannel && !hasPublicChannel) {
+    // ===== 纯对私/离岸/其他平台收款 → 引导到ACP + 9610 =====
+    if(isLargeScale) {
+      // 大额对私 → 尊享
+      nodes = [
+        {n:'1',t:'平台交易成交',d:'在跨境平台完成订单交易',tags:[['b','订单数据']]},
+        {n:'2',t:'9610跨境电商申报',d:'订单+物流数据推送综服平台，清单核放+汇总申报出报关单',tags:[['g','报关成本低'],['b','合规出口']]},
+        {n:'3',t:'ACP合规收汇',d:'通过Alibaba.com Pay收款，支持对公/对私提现',c:'gold',tags:[['b','灵活提现'],['g','合规安全']]},
+        {n:'4',t:'签约尊享优惠计划',d:'月出金达标即享：提现手续费折扣+汇率补贴',tags:[['o','费率低至0.05%'],['g','汇率补贴']]},
+        {n:'5',t:'出口退税 + 权益升级',d:'配合合规出口享退税收益，持续达标解锁更多权益',c:'grn',tags:[['g','退税13%'],['g','越用越省']]}
+      ];
+    } else {
+      nodes = [
+        {n:'1',t:'线上交易成交',d:'在跨境平台完成订单交易',tags:[['b','订单数据']]},
+        {n:'2',t:'9610跨境电商申报',d:'订单+物流数据推送综服平台，清单核放+汇总申报出报关单',c:'gold',tags:[['g','报关成本低'],['b','合规出口']]},
+        {n:'3',t:'信保/ACP合规收汇',d:'通过国际站信保或ACP通道收款，凭交易数据合规结汇到对公账户',tags:[['o','资金安全'],['b','平台权益']]},
+        {n:'4',t:'资金进入对公账户',d:'资金来源清晰，三流匹配，正常经营使用无忧',tags:[['g','来源可追溯']]},
+        {n:'5',t:'财税处理 + 退税',d:'有票退税13%（扣拿票成本约9%净收益4%）、无票免税',c:'grn',tags:[['g','退税/免税'],['g','利润直增']]}
+      ];
+    }
+  } else if(hasPublicChannel && isLargeScale) {
+    // ===== 纯对公大客户 → 钻享 =====
+    nodes = [
+      {n:'1',t:'平台交易 + 正式报关出口',d:'线上成交，正式报关获得报关单',tags:[['b','正式报关单']]},
+      {n:'2',t:'信保收汇至对公账户',d:'通过信保通道收款，资金直达企业对公账户',tags:[['b','合规结汇'],['g','安全高效']]},
+      {n:'3',t:'签约钻享计划',d:'年GMV达到门槛，享受交易服务费折扣+结汇返利',c:'gold',tags:[['o','费率优惠'],['g','结汇返利']]},
+      {n:'4',t:'出口退税申报',d:'退税率13%，扣除拿票成本约9%，净收益约4%',tags:[['g','利润+4%']]},
+      {n:'5',t:'大客户权益加持',d:'海景房流量、1V1服务、品牌出海、总裁研学等VIP权益',c:'grn',tags:[['g','流量扶持'],['g','专属服务']]}
+    ];
+  } else {
+    // ===== 默认平台卖家（中小规模/对公收汇）=====
+    nodes = [
+      {n:'1',t:'线上交易成交',d:'在跨境平台完成订单交易',tags:[['b','订单数据']]},
+      {n:'2',t:'9610跨境电商申报',d:'订单+物流数据推送综服平台，合规出口',c:'gold',tags:[['g','报关成本低'],['b','合规出口']]},
+      {n:'3',t:'信保/ACP合规收汇',d:'通过国际站信保或ACP通道收款结汇到对公账户',tags:[['g','资金安全'],['b','平台权益']]},
+      {n:'4',t:'财税处理 + 退税',d:'有票退税13%（扣拿票成本约9%净收益4%），无票免税',tags:[['g','退税/免税']]},
+      {n:'5',t:'规模增长 → 权益升级',d:'GMV增长后可签约钻享/尊享计划，费率越来越低，权益越来越多',c:'grn',tags:[['g','越用越省'],['g','权益成长']]}
+    ];
+  }
+
+  document.getElementById('t2').innerHTML = `<div class="card"><div class="card-h"><span class="card-badge" style="background:var(--primary-light);color:var(--primary);">🗺️</span>您的资金路径方案</div>
+    <div class="fund-path">${nodes.map(n=>`
+      <div class="fp-node"><div class="fp-dot ${n.c||''}">${n.n}</div><div class="fp-info"><div class="fp-title">${n.t}</div><div class="fp-desc">${n.d}</div><div class="fp-tags">${n.tags.map(t=>`<span class="fp-tag fp-tag-${t[0]}">${t[1]}</span>`).join('')}</div></div></div>
+    `).join('')}</div>
+  </div>`;
+
+  // === TAB 3: Steps (落地步骤) ===
+  let steps = [];
+  if(isMixedChannel) {
+    // 混合收汇 → 拆分落地步骤（9610仅合规需求时推）
+    const wantComplianceStep = pains.includes('compliance');
+    steps.push({t:'<b>收汇通道梳理</b> — 盘点您当前的订单结构和收款方式，按金额大小划分"大单走信保对公"和"小单走ACP提现"两条线，确定各自比例。'});
+    if(wantComplianceStep) {
+      steps.push({t:'<b>大单合规出口搭建</b> — 大额订单走'+(mode==='warehouse'?'9810海外仓报关':mode==='trade'?'0110一般贸易报关':'正式报关出口')+'，开通信保收汇对公通道，实现三流匹配合规闭环。'});
+      steps.push({t:'<b>小单9610合规出口</b> — 平台零散订单接入9610跨境电商模式，订单+物流数据推送综服平台，合规出口+低成本报关。'});
+    } else {
+      steps.push({t:'<b>大单信保对公通道</b> — 大额订单开通信保收汇通道，货款直达对公账户，资金来源清晰可追溯。'});
+      steps.push({t:'<b>小单ACP提现通道</b> — 零散订单通过ACP收汇，灵活选择对公/对私提现，手续费优惠，到账快。'});
+    }
+    if(isLargeScale) {
+      steps.push({t:'<b>钻享+尊享双计划签约</b> — 对公收汇GMV达标签约钻享（服务费折扣+结汇返利），对私出金达标签约尊享（提现费率优惠+汇率补贴），两个计划权益叠加。'});
+    }
+    if(wantComplianceStep) {
+      steps.push({t:'<b>双路径退税方案</b> — 大单正式报关走常规退税（率13%）；小单9610模式有票可退/无票免税。配置退税工具实现智能配单+一键开票。'});
+    }
+    if(pains.includes('finance')) {
+      steps.push({t:'<b>金融服务开通</b> — 开通"生意融"融资服务：订单融资（下单当天可融，年利率5.5%起）+ 信用证融资（备货/交单后融资，利率4.05%起）+ 信用借款（纯信用¥300万）。收汇越多额度越高、利率越低。'});
+    }
+    steps.push({t:'<b>常态化运营 + 比例动态调整</b> — 专属顾问持续跟进，随业务变化动态调整大单/小单比例和收汇通道配置，确保每笔交易走最优路径。'});
+  } else {
+    steps.push({t:'<b>资金路径诊断</b> — 梳理您当前的收款方式和资金流向，识别可优化环节，确认最适合的出口+收汇组合方案。'});
+    if(hasPrivateChannel && !hasPublicChannel) {
+      steps.push({t:'<b>收汇通道切换</b> — 协助开通信保/ACP收汇通道，平滑过渡当前收款方式，确保业务不中断。'});
+    }
+    if(mode==='warehouse') {
+      steps.push({t:'<b>9810海外仓出口申报落地</b> — 货物整批报关出口至海外仓，获得正式报关单。9810模式支持预退税，缓解资金压力。'});
+    } else if(mode==='trade') {
+      steps.push({t:'<b>0110一般贸易通关优化</b> — 确保报关单、合同、物流单据完整匹配，建立单证管理体系，为退税和收汇提供合规基础。'});
+    } else if(ship==='express'||ship==='unclear'||ship==='agent') {
+      steps.push({t:'<b>9610出口申报落地</b> — 协助办理跨境电商备案、将订单物流数据接入综服平台，实现合规出口+低成本报关。'});
+    } else {
+      steps.push({t:'<b>通关流程优化</b> — 确保报关单、合同、物流单据完整匹配，建立单证管理体系，为退税和收汇提供合规基础。'});
+    }
+    if(isLargeScale) {
+      if(hasPublicChannel) {
+        steps.push({t:'<b>钻享计划签约</b> — 您的规模已达到钻享门槛，签约即享交易服务费折扣（低至2折）+结汇返利（40-80pips），直接提升利润。'});
+      }
+      if(hasPrivateChannel) {
+        steps.push({t:'<b>尊享优惠签约</b> — 通过ACP收汇达到月度出金目标，即享提现手续费折扣+汇率补贴，月省数千至数万元。'});
+      }
+      if(!hasPublicChannel && !hasPrivateChannel) {
+        steps.push({t:'<b>大客户权益匹配</b> — 根据您的收汇模式匹配钻享或尊享计划，享受费率优惠+结汇返利+平台VIP资源。'});
+      }
+    }
+    if(pains.includes('compliance') || scale==='l' || scale==='xl') {
+      steps.push({t:'<b>退税方案启动</b> — 整理供应商发票、配置退税工具实现智能配单+一键开票，专家辅导首单退税一次性通过。'});
+    }
+    if(pains.includes('finance')) {
+      steps.push({t:'<b>金融服务开通</b> — 开通"生意融"融资服务：订单融资（下单当天可融，最高¥100万，年利率5.5%起）+ 信用证融资（备货融资+交单后融资，利率4.05%起，最高¥3000万）+ 信用借款（纯信用无抵押，¥300万，年利率6%起）。平台交易越多额度越高、利率越低。'});
+    }
+    steps.push({t:'<b>常态化运营支持</b> — 专属顾问持续跟进，确保每笔交易走最优路径。业务增长时随时升级方案和权益，无后顾之忧。'});
+  }
+
+  document.getElementById('t4').innerHTML = `<div class="card"><div class="card-h"><span class="card-badge" style="background:var(--accent-light);color:var(--accent);">🚀</span>落地步骤</div>
+    ${steps.map((s,i)=>`<div class="step-item"><div class="step-num">${i+1}</div><div class="step-text">${s.t}</div></div>`).join('')}
+  </div>`;
+
+  // === TAB 4: Benefit calc (收益测算) ===
+  const amountsUSD = {s:50, m:150, l:350, xl:750, xxl:1500}; // 万美元
+  const amtUSD = amountsUSD[scale] || 150;
+  const amt = Math.round(amtUSD * 6.9); // 万人民币
+  const refundRate = 0.13; // 退税率13%
+  const ticketCost = 0.09; // 拿票成本9%
+  const netRefundRate = refundRate - ticketCost; // 净收益4%
+  const refundAmt = Math.round(amt * netRefundRate);
+  
+  // 钻享/尊享收益计算
+  let planBenefit = 0;
+  let planName = '';
+  let planDetail = '';
+  
+  if(isLargeScale && (hasBankPublic || hasAlibabaPlatform || mode==='trade')) {
+    // 钻享收益：基于FY26真实返利数据（交易服务费折扣+结汇返利合计）
+    // FY26实际平均：200-500万≈2.4万/年，500-1000万≈5万/年，1000-2000万≈10万/年
+    planName = '钻享计划';
+    let tierLabel = '';
+    if(amtUSD >= 1000) { planBenefit = 10; tierLabel = '1000万+档'; }
+    else if(amtUSD >= 500) { planBenefit = 5; tierLabel = '500-1000万档'; }
+    else if(amtUSD >= 200) { planBenefit = 2; tierLabel = '200-500万档'; }
+    else { planBenefit = 0; }
+    
+    if(planBenefit > 0) {
+      planDetail = `${tierLabel}：交易服务费折扣+结汇返利（基于FY26同档客户平均值）`;
+    }
+  } else if(isLargeScale && (hasPersonal || hasOtherPlatform)) {
+    // 尊享收益：提现手续费折扣 + 汇率补贴
+    planName = '尊享优惠';
+    const monthlyUSD = amtUSD / 12;
+    if(monthlyUSD >= 100) {
+      // 2档：月100万+美金
+      planBenefit = Math.round(2.7 * 12); // 约2.7万/月 → 年32万
+      planDetail = '提现手续费折扣（低至0.05%）+汇率补贴（+10BP），月省约2.7万';
+    } else if(monthlyUSD >= 40) {
+      // 1档：月40-100万美金
+      planBenefit = Math.round(0.8 * 12); // 约0.8万/月 → 年9.6万
+      planDetail = '提现手续费折扣（对私0.1%/对公0.05%），月省约0.8万';
+    } else {
+      planBenefit = 3;
+      planDetail = '达到月度门槛后可享提现费率折扣';
+    }
+  } else if(isLargeScale) {
+    planName = '钻享/尊享计划';
+    planBenefit = Math.round(amt * 0.008);
+    planDetail = '签约后享受交易费率折扣+结汇返利/汇率补贴';
+  }
+  
+  const totalBenefit = refundAmt + planBenefit;
+
+  let benefitRows = `
+    <div class="benefit-row"><span class="label">出口退税净收益（退税13% - 拿票成本9%）</span><span class="val">+${refundAmt}万</span></div>`;
+  if(planBenefit > 0) {
+    benefitRows += `
+    <div class="benefit-row"><span class="label">${planName}权益收益</span><span class="val">+${planBenefit}万</span></div>
+    <div style="font-size:11px;color:var(--gray-500);padding:0 0 8px 12px;">${planDetail}</div>`;
+  }
+  benefitRows += `
+    <div class="benefit-row"><span class="label">资金周转加速（到账提前5-10天）</span><span class="val">间接收益</span></div>
+    <div class="benefit-row"><span class="label">平台资源权益（流量扶持+品牌曝光）</span><span class="val">间接收益</span></div>`;
+
+  document.getElementById('t3').innerHTML = `<div class="card"><div class="card-h"><span class="card-badge" style="background:var(--green-light);color:var(--green);">📈</span>方案收益测算</div>
+    <p style="font-size:12px;color:var(--gray-500);margin-bottom:12px;">基于年出口额约 ${amtUSD} 万美元（≈${amt}万人民币）估算</p>
+    <div class="benefit-box">
+      <div class="benefit-title">合规方案年化收益</div>
+      ${benefitRows}
+      <div class="benefit-total">预估年化直接收益：+${totalBenefit}万元</div>
+    </div>
+    <p style="font-size:11px;color:var(--gray-500);margin-top:10px;line-height:1.5;">* 退税净收益 = 退税率13% - 拿票成本约9%，净收益约4%。实际退税率取决于商品HS编码，拿票成本视供应商情况有所浮动。钻享/尊享权益收益基于签约对应计划后的费率优惠测算，实际以签约方案为准。</p>
+  </div>
+  <div class="cta">
+    <h3>想拿到这笔收益？</h3>
+    <p>专业顾问1对1帮您落地方案，算清楚每一笔能省的钱</p>
+    <div id="lead-form-area">
+      <div style="margin-top:12px;">
+        <input type="tel" id="lead-phone" placeholder="手机号（必填）" maxlength="11" style="width:100%;padding:10px 12px;border:1px solid #e0e0e0;border-radius:8px;font-size:14px;margin-bottom:8px;box-sizing:border-box;">
+        <input type="text" id="lead-company" placeholder="公司名称（选填）" style="width:100%;padding:10px 12px;border:1px solid #e0e0e0;border-radius:8px;font-size:14px;margin-bottom:8px;box-sizing:border-box;">
+        <input type="text" id="lead-name" placeholder="您的称呼（选填）" style="width:100%;padding:10px 12px;border:1px solid #e0e0e0;border-radius:8px;font-size:14px;margin-bottom:12px;box-sizing:border-box;">
+        <button class="btn-white" onclick="submitLead()" style="width:100%;">预约顾问，领取方案</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function stab(e, id) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  e.target.classList.add('on');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+
+function go(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id === 'pg-admin') renderAdmin();
+}
+
+function renderAdmin() {
+  // Admin page is now static HTML, no dynamic rendering needed
+}
+
+function generateLink() {
+  const name = document.getElementById('gen-name').value.trim();
+  const company = document.getElementById('gen-company').value.trim();
+  if(!name) { alert('请填写您的姓名'); return; }
+  if(!company) { alert('请填写拍档公司名称'); return; }
+  
+  // 生成专属URL
+  const baseUrl = window.location.origin + window.location.pathname;
+  const params = new URLSearchParams({s: name, c: company});
+  const fullUrl = baseUrl + '?' + params.toString();
+  
+  // 显示结果
+  document.getElementById('gen-url').textContent = fullUrl;
+  document.getElementById('gen-qr').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(fullUrl)}`;
+  document.getElementById('gen-result').style.display = 'block';
+  
+  // 存储到本地（方便复用）
+  try { localStorage.setItem('myPromoLink', fullUrl); } catch(e){}
+}
+
+function copyLink() {
+  const url = document.getElementById('gen-url').textContent;
+  if(navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(()=>alert('链接已复制！')).catch(()=>fallbackCopy(url));
+  } else { fallbackCopy(url); }
+}
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text; document.body.appendChild(ta); ta.select();
+  document.execCommand('copy'); document.body.removeChild(ta);
+  alert('链接已复制！');
+}
+function shareWechat() {
+  alert('请复制上方链接，打开微信粘贴发送给客户\n\n或者长按保存二维码，发送给客户扫码');
+}
+</script>
+</body>
+</html>
